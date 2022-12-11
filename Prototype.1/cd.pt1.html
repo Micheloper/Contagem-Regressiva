@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown Prototype</title>
+  </head>
+  <body>
+    <div id="txt">
+      <h2>
+        Dias
+        <p id="d"></p>
+      </h2>
+      <h2>
+        Horas
+        <p id="h"></p>
+      </h2>
+      <h2>
+        Minutos
+        <p id="m"></p>
+      </h2>
+      <h2>
+        Segundos
+        <p id="s"></p>
+      </h2>
+    </div>
+  </body>
+  <style>
+    body {
+      background-color: black;
+    }
+    p {
+      color: aliceblue;
+    }
+    h1,
+    h2 {
+      color: aliceblue;
+    }
+    div {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      border: 1px solid white;
+    }
+  </style>
+</html>
+<script>
+  const countdown = (d, h, m, s, data, idMsg, msg) => {
+    let date = new Date();
+    let newDate = new Date(data);
+    let total = (newDate - date) / 1000;
+
+    let dayID = Math.floor(total / 3600 / 24);
+    let hourID = Math.floor(total / 3600) % 24;
+    let minID = Math.floor(total / 60) % 60;
+    let secID = Math.floor(total) % 60;
+
+    if (total > 0) {
+      d.innerHTML = dayID;
+      h.innerHTML = hourID;
+      m.innerHTML = minID;
+      s.innerHTML = secID;
+    } else {
+      idMsg.innerHTML = `<h1>${msg}</h1>`;
+    }
+  };
+
+  setInterval(() => {
+    countdown(d, h, m, s, "2022/12/7 16:21", txt, "Sem medo de JS");
+  }, 1000);
+</script>

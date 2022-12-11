@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown Prototype 2</title>
+  </head>
+  <body>
+    <div id="dt1">
+      <h1 id="txt1"></h1>
+    </div>
+    <div id="dt2">
+      <h1 id="txt2"></h1>
+    </div>
+  </body>
+  <style>
+    body {
+      background-color: black;
+    }
+    .p1 {
+      background-color: antiquewhite;
+    }
+    .p2 {
+      background-color: aqua;
+    }
+  </style>
+</html>
+<script>
+  const cd2 = (id, data, idMsg, msg, idCss) => {
+    let date = new Date();
+    let newdate = new Date(data);
+    let total = (newdate - date) / 1000;
+
+    if (total > 0) {
+      let dayID = Math.floor(total / 3600 / 24);
+      let hoursID = Math.floor(total / 3600) % 24;
+      let minID = Math.floor(total / 60) % 60;
+      let segID = Math.floor(total) % 60;
+      id.innerHTML = `
+    <p>Dias: ${dayID}</p>
+    <p>Horas: ${hoursID}</p>
+    <p>Minutos: ${minID}</p>
+    <p>Segundos: ${segID}</p>
+    `;
+    } else {
+      document.getElementById(idMsg).innerHTML = msg;
+    }
+    id.classList.add(`${idCss}`);
+  };
+
+  fetch("feriados.json")
+    .then((res) => res.json())
+    .then((data) => {
+      let D = data.map((Dres) => Dres.data);
+      let N = data.map((Nres) => Nres.nome);
+
+      return setInterval(() => {
+        init(D, N);
+      }, 1000);
+    });
+  function init(D, N) {
+    cd2(dt1, D[0], "txt1", N[0], "p1");
+    cd2(dt2, D[1], "txt2", N[1], "p2");
+  }
+</script>
